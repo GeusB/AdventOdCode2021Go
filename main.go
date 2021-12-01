@@ -5,14 +5,37 @@ import (
 )
 
 func main() {
+	Day1_2()
 	Day1_1()
 }
 
+func Day1_2() {
+	smallResult := CalculateWindowIncreaseCount(SmallInput())
+	fmt.Println(smallResult)
+	bigResult := CalculateWindowIncreaseCount(Input())
+	fmt.Println(bigResult)
+}
+
 func Day1_1() {
-	result1 := CalculateIncreaseCount([]int{199, 200, 208, 210, 200, 227, 240, 269, 260, 263})
-	result2 := CalculateIncreaseCount(Input())
-	fmt.Println(result1)
-	fmt.Println(result2)
+	smallResult := CalculateIncreaseCount(SmallInput())
+	fmt.Println(smallResult)
+	bigResult := CalculateIncreaseCount(Input())
+	fmt.Println(bigResult)
+}
+
+func CalculateWindowIncreaseCount(input []int) int {
+	windowList := []int{}
+	length := len(input)
+	for i := 0; i < length-2; i++ {
+		windowDepth := input[i]
+		for j := 1; j < 3; j++ {
+			if i+j < length {
+				windowDepth = windowDepth + input[i+j]
+			}
+		}
+		windowList = append(windowList, windowDepth)
+	}
+	return CalculateIncreaseCount(windowList)
 }
 
 func CalculateIncreaseCount(slice []int) int {
@@ -23,6 +46,10 @@ func CalculateIncreaseCount(slice []int) int {
 		}
 	}
 	return total
+}
+
+func SmallInput() []int {
+	return []int{199, 200, 208, 210, 200, 207, 240, 269, 260, 263}
 }
 
 func Input() []int {
